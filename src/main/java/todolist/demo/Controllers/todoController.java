@@ -6,11 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
 
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import todolist.demo.model.Todo;
 import todolist.demo.servicies.todoService;
-
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -30,7 +27,7 @@ public class todoController {
 
     @PostMapping
     public ResponseEntity<List<Todo>> save(@RequestBody Todo todo){
-        return ResponseEntity.status(HttpStatus.OK).body(todoService.save(todo));
+        return ResponseEntity.status(HttpStatus.CREATED).body(todoService.save(todo));
     }
 
     @DeleteMapping("/{id}")
