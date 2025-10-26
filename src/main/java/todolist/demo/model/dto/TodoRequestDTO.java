@@ -1,4 +1,13 @@
 package todolist.demo.model.dto;
 
-public record TodoRequestDTO(String titulo, boolean realizado, int prioridade, String descricao) {
+
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
+public record TodoRequestDTO(
+        @NotBlank @NotNull String titulo,
+        boolean realizado,
+        int prioridade,
+        @NotBlank @NotNull String descricao
+){
 }

@@ -39,14 +39,8 @@ public class todoService {
         return list();
     }
 
-    public List<TodoResponseDTO> delete(TodoRequestDTO dto) {
-        Todo todo = new Todo();
-        todo.setTitulo(dto.titulo());
-        todo.setDescricao(dto.descricao());
-        todo.setPrioridade(dto.prioridade());
-        todo.setRealizado(dto.realizado());
-        todoRepository.delete(todo);
-
+    public List<TodoResponseDTO> delete(Long id) {
+        todoRepository.deleteById(id);
         return list();
     }
 

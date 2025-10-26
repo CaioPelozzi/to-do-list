@@ -1,12 +1,14 @@
 package todolist.demo.Controllers;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.http.ResponseEntity;
 
 
-import todolist.demo.model.Todo;
+import todolist.demo.model.dto.TodoRequestDTO;
+import todolist.demo.model.dto.TodoResponseDTO;
 import todolist.demo.servicies.todoService;
 import java.util.List;
 
@@ -21,12 +23,12 @@ public class todoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Todo>> list(){
-        return ResponseEntity.ok().body(todoService.list());
+    public ResponseEntity<List<TodoResponseDTO>> list(){
+        return ResponseEntity.status(HttpStatus.OK).body(todoService.list());
     }
 
     @PostMapping
-    public ResponseEntity<List<Todo>> save(@RequestBody Todo todo){
+    public ResponseEntity<List<TodoResponseDTO>> save(@RequestBody @Valid TodoRequestDTO todo){
         return ResponseEntity.status(HttpStatus.CREATED).body(todoService.save(todo));
     }
 
@@ -37,7 +39,7 @@ public class todoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<List<Todo>> update(@PathVariable Long id,@RequestBody Todo todo){
+    public ResponseEntity<List<TodoResponseDTO>> update(@PathVariable Long id,@RequestBody @Valid TodoRequestDTO todo){
         todoService.update(id, todo);
         return ResponseEntity.status(HttpStatus.OK).body(todoService.list());
     }
