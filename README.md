@@ -115,6 +115,7 @@ http://localhost:8080
 - ✅ Implementar **testes unitários** com **H2 Database**  
   (banco em memória para testes automatizados)
 - ✅ Adicionar **documentação da API** com **Springdoc OpenAPI (Swagger UI)**
+- ✅ Adicionar **tratamento de exceções** com **@ExceptionHandler**
 
 ---
 
