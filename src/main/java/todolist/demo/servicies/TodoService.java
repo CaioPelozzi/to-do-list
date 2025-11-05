@@ -30,10 +30,8 @@ public class TodoService {
     public CollectionModel<EntityModel<TodoResponseDTO>> list(){
         Sort sort = Sort.by("prioridade").ascending();
         List<Todo> todo = todoRepository.findAll(sort);
-
-
         List<EntityModel<TodoResponseDTO>> todoModels = todo.stream()
-                .map(t -> { // ← abre o bloco do map()
+                .map(t -> {
                     var dto = new TodoResponseDTO(
                             t.getId(),
                             t.getTitulo(),
@@ -42,13 +40,11 @@ public class TodoService {
                             t.getDescricao()
                     );
 
-                    // retorna o EntityModel dentro do map()
                     return EntityModel.of(dto,
                             linkTo(methodOn(TodoController.class).getTodoById(t.getId())).withSelfRel()
                     );
-                }) // ← aqui fecha o bloco do map()
+                })
                 .toList();
-
         return CollectionModel.of(todoModels,
                 linkTo(methodOn(TodoController.class).list()).withSelfRel()
         );
@@ -75,11 +71,6 @@ public class TodoService {
         return list();
     }
 
-    public CollectionModel<EntityModel<TodoResponseDTO>> delete(Long id) {
-        todoRepository.deleteById(id);
-        return list();
-    }
-
     public CollectionModel<EntityModel<TodoResponseDTO>> update(Long id, TodoRequestDTO dto){
         Todo todoExistente = todoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Todo não encontrado com id: " + id));
@@ -88,6 +79,11 @@ public class TodoService {
         todoExistente.setPrioridade(dto.prioridade());
         todoExistente.setRealizado(dto.realizado());
         todoRepository.save(todoExistente);
+        return list();
+    }
+
+    public CollectionModel<EntityModel<TodoResponseDTO>> delete(Long id) {
+        todoRepository.deleteById(id);
         return list();
     }
 }
